@@ -20,6 +20,22 @@ yarn install
 bun install
 ```
 
+## Apply Migrations
+
+```bash
+# npm
+npm run migrate
+
+# pnpm
+pnpm run migrate
+
+# yarn
+yarn run migrate
+
+# bun
+bun run migrate
+```
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
