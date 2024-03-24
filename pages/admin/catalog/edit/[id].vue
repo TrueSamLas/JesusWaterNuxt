@@ -23,8 +23,8 @@
         </UFormGroup>
 
         <UFormGroup>
-            <UButton @click="create()">
-                <span>Создать</span>
+            <UButton @click="edit()">
+                <span>Изменить</span>
             </UButton>
         </UFormGroup>
     </div>
@@ -64,10 +64,20 @@
             },
         },
         methods: {
-            async create()
+            async load()
             {
-                const success = await $fetch('/api/catalog/create', {
-                    method: 'POST',
+                const catalogitem = await $fetch(`/api/catalog/find/${ this.$route.params.id }`);
+
+                this.form = {
+                    ...this.form,
+                    ...catalogitem,
+                };
+            },
+
+            async edit()
+            {
+                const success = await $fetch(`/api/catalog/edit/${ this.$route.params.id }`, {
+                    method: 'PUT',
                     body: {
                         form: this.form,
                     },
@@ -78,6 +88,10 @@
                 else
                     alert('Error!');
             },
+        },
+        mounted()
+        {
+            this.load();
         },
     }
 </script>

@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@sidebase/nuxt-auth',
     '@nuxt/ui',
+    '@vueuse/nuxt',
   ],
   auth: {
     provider: {
@@ -13,7 +14,10 @@ export default defineNuxtConfig({
     // },
   },
   ui: {
-    icons: ['svg-spinners'],
+    icons: [
+      'svg-spinners',
+      'fa6-solid',
+    ],
   },
   devtools: { enabled: true },
 })

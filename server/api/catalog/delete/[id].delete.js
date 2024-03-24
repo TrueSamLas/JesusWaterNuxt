@@ -10,15 +10,13 @@ export default defineEventHandler(async (event) => {
             message: 'Доступ ограничен',
         });
 
-    const body = await readBody(event);
+    const id = Number(
+        getRouterParam(event, 'id')
+    );
 
-    const catalogitem = await prisma.catalog.create({
-        data: {
-            name: body.form.name,
-            price: Number(body.form.price),
-            image: body.form.image
-        },
-    });
+    const catalogitem = await prisma.catalog.delete({
+        where: { id },
+    })
 
     if (catalogitem)
         return true;
