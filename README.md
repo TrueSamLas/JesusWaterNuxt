@@ -20,6 +20,10 @@ yarn install
 bun install
 ```
 
+## Create .env
+
+Copy `.env.example` and name it `.env`
+
 ## Apply Migrations
 
 ```bash
