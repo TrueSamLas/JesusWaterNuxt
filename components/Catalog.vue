@@ -12,7 +12,11 @@
         <div class="catalog flex flex-wrap">
             <div
                 class="catalog-item"
-                v-for="item in filteredCatalog">
+                v-for="item in filteredCatalog"
+                @click="
+                    catalogView = item;
+                    catalogModal = true;
+                ">
                 <img :src="item.image">
                 <div>{{ item.name }}</div>
                 <div>{{ item.price }} руб.</div>
@@ -21,9 +25,41 @@
 
         <USlideover v-model="sideModal">
             <div class="p-4 flex flex-col">
-                <!-- тут фильтры -->
+                <UFormGroup :label="`Цена (От): ${ filter.priceFrom } руб.`" class="mb-4">
+                    <URange v-model="filter.priceFrom" min="0" max="10000"/>
+                </UFormGroup>
+
+                <UFormGroup :label="`Цена (До): ${ filter.priceTo } руб.`" class="mb-4">
+                    <URange v-model="filter.priceTo" min="0" max="10000"/>
+                </UFormGroup>
+
+                <hr class="mb-4">
             </div>
         </USlideover>
+
+        <UModal v-model="catalogModal">
+            <div class="p-4">
+                <div class="flex justify-center">
+                    <img :src="catalogView.image" width="400">
+                </div>
+
+                <hr class="my-4">
+
+                <h2>{{ catalogView.name }}</h2>
+                <h2>{{ catalogView.price }} руб.</h2>
+
+                <hr class="my-4">
+
+                <div class="flex justify-end">
+                    <UButton @click="
+                        cart.set(catalogView.id, (cart.get(catalogView.id) ?? 0) + 1);
+                        catalogModal = false;
+                    ">
+                        В корзину
+                    </UButton>
+                </div>
+            </div>
+        </UModal>
     </div>
 </template>
 
@@ -32,13 +68,26 @@
 
     const search = ref('');
     const sideModal = ref(false);
+    const filter = reactive({
+        priceFrom: 0,
+        priceTo: 10000,
+    });
+
+    const catalogView = ref(null);
+    const catalogModal = ref(false);
 
     const filteredCatalog = computed(() => {
         return catalog.value
             .filter(item => (
                 item.name.toLowerCase().includes(search.value.toLowerCase())
+                &&
+                item.price >= filter.priceFrom
+                &&
+                item.price <= filter.priceTo
             ));
     });
+
+    const cart = useLocalStorage('cart', new Map());
 </script>
 
 <style lang="scss" scoped>
@@ -83,6 +132,7 @@
         flex: 0 0 200px;
         background: white;
         border-radius: 10px;
+        cursor: pointer;
 
         > img{
             width: 100%;

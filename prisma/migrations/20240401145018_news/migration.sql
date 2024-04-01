@@ -1,3 +1,12 @@
+-- CreateTable
+CREATE TABLE "News" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "title" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "text" TEXT NOT NULL,
+    "date" INTEGER NOT NULL
+);
+
 -- RedefineTables
 PRAGMA foreign_keys=OFF;
 CREATE TABLE "new_User" (

@@ -25,3 +25,11 @@ model User {
   userdata  String  @default("{}")
   role      String  @default("user") // or "admin"
 }
+
+model News {
+  id        Int     @id @default(autoincrement())
+  title     String
+  image     String
+  text      String
+  date      Int
+}

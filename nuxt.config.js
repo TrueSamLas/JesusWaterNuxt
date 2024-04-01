@@ -4,6 +4,7 @@ export default defineNuxtConfig({
     '@sidebase/nuxt-auth',
     '@nuxt/ui',
     '@vueuse/nuxt',
+    '@nuxt/test-utils/module',
   ],
   auth: {
     provider: {
