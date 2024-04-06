@@ -49,7 +49,7 @@
         return `${
             d.getDay().toString().padStart(2, '0')
         }.${
-            d.getMonth().toString().padStart(2, '0')
+            (d.getMonth() + 1).toString().padStart(2, '0')
         }.${
             d.getFullYear()
         }`;
